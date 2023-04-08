@@ -1,0 +1,126 @@
+body {
+  font-family: sans-serif;
+  background-color: aqua;
+}
+
+.imagenes-container {
+  /* Manda todos los elementos dentro del contenedor a la derecha */
+  display: flex;
+  /* Para poder mover el contenido del contenedor al centro con respecto al eje horizontal o en X */
+  justify-content: center;
+  /* Para poder mover el contenido del contenedor al centro con respecto al eje vertical o en Y */
+  align-items: center;
+  /* align-items no funciona a menos que se le de una medida específca, se usa la unidad vh en la altura, y así, de esta manera el 100vh es equivalente a invadir toda la pantalla, es decir, invade el 100% de la pantalla, ya que 1vh=1%, entonces 100vh=100% */
+  height: 100vh;
+}
+/* Se le da sus características al contenedor de la imagen */
+.imagenes-container .imagen {
+  /* Se le dice que sea relativo, es decir, que de acuerdo a la pantalla se adapte */
+  position: relative;
+  /* Ya que se van a apilar, se le da un margen a la derecha */
+  margin-right: -10px;
+  /* Esto, para que vaya de izquierda a derecha */
+  display: inline-flex;
+  /* Se indica que irá el flex diction en columna, entonces, la imagen será una columna, y el texto otra */
+  flex-direction: column;
+}
+/* Se le da las características a la imagen persé */
+.imagenes-container .imagen img {
+  /* Se le da un ancho a las imágenes */
+  width: 150px;
+  /* Se define una altura */
+  height: 150px;
+  /* Se agrega una trnsición debido a la animación que se realiza en la parte de abajo del salto, de manera que la transición lo haga más natural el movimiento de salto
+  El ease-in-out es para tanto inicio como fin de animación*/
+  transition: transform 0.32s ease-in-out;
+}
+/* Se le da características al texto usado en el span */
+.imagenes-container .imagen .nombre {
+  /* Se le dice que la posición del texto será absoluta para poder mover el texto a donde sea */
+  position: absolute;
+  /* Afecta el fondo del bloque del texto */
+  background-color: black;
+  /* Se le da curvatura al radio de ese bloque */
+  border-radius: 5px;
+  /* Color de texto */
+  color: white;
+  /* Organización del texto, se le dice que no se organice de izq a der */
+  display: none;
+  /* De manera que sea adaptativo a la pantalla se le da un ancho mínimo que aceptará*/
+  min-width: 100px;
+  /* Se le da un ancho fijo */
+  width: 150px;
+  /* Se le dice que aparezca en la parte de arriba de la imagen, e.i, su posición con respecto a arriba */
+  top: -50px;
+  /* Se le da un relleno (Manda hacia adentro el hijo)*/
+  padding: 10px 15px;
+
+}
+/* Se modifica las características del texto */
+.imagenes-container .imagen .nombre .texto {
+  /* Se le agrega un cuadrado extra alrededor para el texto */
+  display: inline-block;
+  /* Se agrega en caso de que el texto sea demasiado para el contenedor, aparezca tres puntos suspensivos para indicar que hay más texto pero no se muestra */
+  text-overflow: ellipsis;
+  /* En caso de presentar el desbordamiento de texto, se ocultará */
+  overflow: hidden;
+  /* En caso de que halla saltos de línea debido a mucho texto, no los permite*/
+  white-space: nowrap;
+  /* Se modifica los margenes en 0 de arriba y abajo y automático de izq y der */
+  margin: 0 auto;
+  /* Cuando el texto pase de este número de pixeles, lo ocultará como se definió en overflow */
+  width: 150px;
+  /* Se hace la alineación del texto */
+  text-align: center;
+  /* Se le indica que el tamaño de la caja contenedora, la adapte el antecesor de tipo Nombre */
+  box-sizing: border-box;
+}
+/* Se modifica para que al poner el mouse encima, se diga qué pokemon es, es un evento el hover */
+.imagenes-container .imagen:hover .nombre {
+  /* Se muestra de izq a der */
+  display: inline-block;
+  /* Realiza una transición de desplazamiento en Y */
+  transform: translateY(-20px);
+}
+/* Se realiza como un efecto de triangulo que indica que imagen es la perteneciente al nombre que aparece sobre los Pokemon */
+.imagenes-container .imagen .nombre::before {
+  /* Se le indica que no se quiere que vaya nada en este atributo, que es el contenido */
+  content: "";
+  /* Se le da un posicionamiento absoluto, ya que se quiere que se posicione de acuerdo a su contenedor inmediato o anterior, en este caso es la clase imagen, entonces la posición absoluta la toma de acuerdo a la imagen y no el texto, como sería con relative*/
+  position: absolute;
+  /* Se le da un ancho y alto */
+  width: 1px;
+  height: 1px;
+  /* Se le da una posición relativa a la izquierda */
+  left: 40%;
+  /* Se le da una posición relativa a abajo */
+  bottom: -20px;
+  /* Se le da un tipo de borde arriba */
+  border-top: 10px solid black;
+
+  /* Al usar "transparent" esas secciones de bordes se hacen transparentes para tomar la forma de triangulo invertido que apunta al pokemon, son secciones de un cuadrado, al quitar izq, der y abajo con transparent, estas no se ven y solo queda la sección de arriba*/
+
+  /* Se le da un tipo de borde a la izquierda */
+  border-left: 10px solid transparent;
+  /* Se le da un tipo de borde a la derecha */
+  border-right: 10px solid transparent;
+  /* Se le da un tipo de borde abajo */
+  border-bottom: 10px solid transparent;
+}
+/* Se va realizar una pequeña animación que dará lugar al posicionar el mouse en el Pokemon */
+.imagenes-container .imagen:hover img {
+  /* Se pone una animación sencilla llamada transform, trasladando su coordenada Y y dando el efecto de un pequeño salto*/
+  transform: translateY(-15px);
+}
+/* Por último se le da la funcionalidad móvil, para poder vizualizar los elementos de manera de columna cuando hay cierto tamaño en la pantalla, es decir, cuando la pantalla tenga 680px, se va querer que las imágenes cambien a forma de columna: */
+@media (max-width: 680px) {
+  .imagenes-container{
+    flex-direction: column;
+    /* De igual manera, se pone la altura a 180vh para que el hover del primer pokemon se pueda vizualizar */
+    height: 180vh;
+  }
+
+  .imagenes-container .imagen{
+    padding-top: 30px;
+  }
+}
